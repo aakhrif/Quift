@@ -1,5 +1,9 @@
 **/.env
 **/vendor
+**/node_modules
+**/.nuxt
+**/dist
+../.output
 **/init/*.sql
 **/init/*.bak
 *.log

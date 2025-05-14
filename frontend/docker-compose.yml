@@ -1,0 +1,32 @@
+services:
+  nuxt-init:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    entrypoint: ["sh", "scripts/init.sh"]
+
+  nuxt-build:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    entrypoint: ["sh", "-c"]
+    command: "npm install && npm run build"
+
+  nuxt-frontend:
+    image: nginx:alpine
+    container_name: nuxt-frontend
+    ports:
+      - "4000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./.output/public:/usr/share/nginx/html
+    networks:
+      - crm-net
+    depends_on:
+      - nuxt-build
+
+networks:
+  crm-net:
+    external: true
