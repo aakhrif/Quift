@@ -1,0 +1,4 @@
+**/.env
+**/init/*.sql
+**/init/*.bak
+*.log

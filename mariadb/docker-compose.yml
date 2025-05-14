@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: crm-mariadb
+    env_file:
+      - .env
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    container_name: crm-adminer
+    ports:
+      - "8080:8080"
