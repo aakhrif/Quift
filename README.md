@@ -1,47 +1,70 @@
 # Docker Resources
 
-This repository contains containerized infrastructure components for development and production use.
+This repository contains containerized infrastructure components and front-end applications for development and production use.
+
+---
 
 ## 📁 Structure
 
 ```
 /docker-resources
-├── mariadb/      # MariaDB with SQL initialization and .env
-├── redis/        # Redis with optional configuration
+├── mariadb/        # MariaDB with SQL initialization and .env
+├── redis/          # Redis with optional configuration
+├── frontend/       # Nuxt 3 + TailwindCSS v4 application
 └── ...
 ```
+
+---
 
 ## 📦 Included Services
 
 ### ✅ mariadb/
 
-- Runs MariaDB 11 with initial database setup (`schema.sql`)
-- Configurable via `.env` file
-- Optionally usable with Adminer (locally or embedded)
+- MariaDB 11 with initial schema via `schema.sql`
+- Configurable via `.env`
+- Optional Adminer support
 
-**Start:**
 ```bash
 cd mariadb
 docker compose up -d
 ```
 
+---
+
 ### ✅ redis/
 
-- Runs Redis (currently without persistence or password)
+- Lightweight Redis container (no persistence or password by default)
 
-**Start:**
 ```bash
 cd redis
 docker compose up -d
 ```
 
+---
+
+### ✅ frontend/ (Nuxt 3 + TailwindCSS v4)
+
+- Nuxt 3 app with Vite + TailwindCSS v4 setup
+- Mobile-first, component-based structure
+- TailwindCSS eingebunden via Vite + postcss inline in `nuxt.config.ts`
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
 ## 📁 .gitignore Notes
 
-- `.env` and SQL files are **not versioned**
-- Use `.env.example` to share sample values
+- `.env`, `*.sql`, and `node_modules` are **excluded**
+- Use `.env.example` to distribute sample config
 
-## ℹ️ Notes
+---
 
-- Services are independently usable
-- Each Compose file runs standalone
-- Data is persisted via Docker volumes
+## ℹ️ General Notes
+
+- Each service is standalone and isolated
+- Docker volumes ensure persistence where needed
+- Frontend app is designed for extension (e.g. SSR or API integration)

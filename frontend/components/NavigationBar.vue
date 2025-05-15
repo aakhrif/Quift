@@ -1,0 +1,11 @@
+<template>
+    <nav class="flex justify-between items-center p-4 px-4 sm:px-8 md:px-16">
+        <Logo />
+        <LoginButton />
+    </nav>
+</template>
+
+<script setup>
+import Logo from './Logo.vue'
+import LoginButton from './LoginButton.vue'
+</script>
