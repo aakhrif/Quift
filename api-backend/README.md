@@ -1,11 +1,12 @@
-# Backend API Service (PHP + Slim + GraphQL)
+# Backend API Service (PHP + Slim + GraphQL + JWT Login)
 
-This service provides a lightweight, containerized PHP backend using Slim Framework and GraphQL.
+This service provides a lightweight, containerized PHP backend using Slim Framework and GraphQL, with optional local development support for JWT-based login.
 
 ## 🚀 Stack
 
-- PHP 8.2 (FPM)
+- PHP 8.2 (CLI or FPM)
 - Slim Framework
+- Firebase PHP-JWT (for auth)
 - webonyx/graphql-php
 - nginx (as reverse proxy)
 - Docker Compose
@@ -15,7 +16,8 @@ This service provides a lightweight, containerized PHP backend using Slim Framew
 ```
 backend-api/
 ├── public/              # Web entry point (index.php)
-├── src/                 # Business logic (optional)
+├── routes/              # REST endpoints (e.g. login.php)
+├── includes/            # Shared helpers (e.g. DB.php)
 ├── graphql/             # GraphQL types and resolvers
 ├── Dockerfile           # PHP-FPM + Composer
 ├── docker-compose.yml   # Defines services and network
@@ -23,7 +25,7 @@ backend-api/
 └── .env                 # Environment config
 ```
 
-## 🐳 Usage
+## 🐳 Usage (Docker)
 
 1. Create Docker network (if not already exists):
    ```bash
@@ -38,37 +40,49 @@ backend-api/
 3. Service will be accessible at:  
    `http://localhost:8080/graphql`
 
-## ✅ Test the API
+---
 
-### Via `curl`
+## ⚙️ Local Dev (PHP CLI)
+
+Start the API locally (Slim only):
+
 ```bash
-curl -X POST http://localhost:8080/graphql \
-  -H "Content-Type: application/json" \
-  -d '{ "query": "{ hello }" }'
+php -S localhost:8000 -t public
 ```
 
-### Via Postman / Thunder Client
+---
 
-- **Method:** POST  
-- **URL:** `http://localhost:8080/graphql`  
-- **Headers:** `Content-Type: application/json`  
-- **Body:**
-```json
-{
-  "query": "{ hello }"
-}
+## ✅ Test the GraphQL API
+
+### Via `curl`
+
+```bash
+curl -X POST http://localhost:8080/graphql   -H "Content-Type: application/json"   -d '{ "query": "{ hello }" }'
+```
+
+---
+
+## 🔐 Test Login Endpoint
+
+### Via `curl`
+
+```bash
+curl -X POST http://localhost:8000/login   -H "Content-Type: application/json"   -d '{ "email": "user@example.com", "password": "test1234" }'
 ```
 
 ### Expected response
+
 ```json
 {
-  "data": {
-    "hello": "Hello, world!"
-  }
+  "token": "eyJhbGciOi..."
 }
 ```
 
+---
+
 ## 🛠 Customize
 
-- Define your schema and resolvers under `/graphql` or `/src`
-- Update `public/index.php` to wire them into the endpoint
+- Define GraphQL types in `/graphql`
+- Add REST logic in `/routes`
+- Configure DB access in `includes/DB.php`
+- Adjust `.env` for local or container DB usage

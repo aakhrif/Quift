@@ -11,6 +11,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
+(require __DIR__ . '/../routes/login.php')($app);
+
 // Simple GraphQL schema
 $schema = new Schema([
     'query' => new ObjectType([
