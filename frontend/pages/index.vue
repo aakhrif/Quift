@@ -1,11 +1,6 @@
 <template>
-
-  <BannerTop />
-  <NavigationBar />
-  
+  startpage
 </template>
 
 <script setup>
-import BannerTop from '~/components/BannerTop.vue'
-import NavigationBar from '~/components/NavigationBar.vue'
 </script>

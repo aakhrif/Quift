@@ -1,6 +1,10 @@
+<!-- pages/login.vue -->
 <script setup>
+definePageMeta({
+  layout: 'minimal'
+})
 </script>
 
 <template>
-    enter name and password
+  <LoginForm />
 </template>

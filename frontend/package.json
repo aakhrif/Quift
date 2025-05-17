@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
+    "build:staging": "nuxt build --mode staging",
+    "build:production": "nuxt build --mode production",
     "preview": "nuxt preview"
   },
   "dependencies": {

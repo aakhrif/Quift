@@ -9,4 +9,10 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+
+   runtimeConfig: {
+    public: {
+      apiUrl: process.env.API_URL || 'http://localhost:8080'
+    }
+  },
 })

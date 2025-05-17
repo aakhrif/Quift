@@ -1,4 +1,6 @@
 **/.env
+frontend/.env.production
+frontend/.env.staging
 **/vendor
 **/node_modules
 **/.nuxt

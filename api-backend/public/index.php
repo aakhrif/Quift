@@ -6,10 +6,21 @@ use Slim\Factory\AppFactory;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 use GraphQL\Type\Definition\ObjectType;
+use Tuupola\Middleware\CorsMiddleware;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
+
+$app->add(new CorsMiddleware([
+    "origin" => ["http://localhost:3000"],
+    "methods" => ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "headers.allow" => ["Content-Type", "Authorization", "X-Requested-With"],
+    "headers.expose" => [],
+    "credentials" => true,
+    "cache" => 0,
+]));
+
 
 (require __DIR__ . '/../routes/login.php')($app);
 
