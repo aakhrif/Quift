@@ -10,9 +10,11 @@ export default defineNuxtConfig({
     ],
   },
 
-   runtimeConfig: {
-    public: {
-      apiUrl: process.env.API_URL || 'http://localhost:8080'
-    }
-  },
+  runtimeConfig: {
+   public: {
+     apiUrl: process.env.API_URL || 'http://localhost:8080'
+   }
+ },
+
+  modules: ['@nuxt/image'],
 })
