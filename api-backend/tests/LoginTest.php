@@ -13,16 +13,22 @@ class LoginTest extends TestCase
 
     public function testLoginWithValidCredentials()
     {
-        $request = (new ServerRequestFactory())->createServerRequest('POST', '/login')
-            ->withParsedBody([
-                'email' => 'user@example.com',
-                'password' => 'test1234'
-            ]);
+        $requestFactory = new ServerRequestFactory();
+        $streamFactory = new \Slim\Psr7\Factory\StreamFactory();
+
+        $body = $streamFactory->createStream(json_encode([
+            'email' => 'user@example.com',
+            'password' => 'test1234'
+        ]));
+
+        $request = $requestFactory->createServerRequest('POST', '/login')
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($body);
 
         $response = $this->app->handle($request);
 
         $this->assertEquals(200, $response->getStatusCode());
-        $body = (string) $response->getBody();
-        $this->assertStringContainsString('token', $body);
+        $this->assertStringContainsString('token', (string) $response->getBody());
     }
+
 }
